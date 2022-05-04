@@ -95,17 +95,7 @@ public:
     void activateGadgets(string gadget){
         if(gadget == "Fan")
             fan.function();
-        else if(gadget == "White_Led"){
-            for(int i=0; i<led.size(); i++)
-                if(led[i]->getName() == gadget)
-                    led[i]->accion();
-        }
-        else if(gadget == "Red_Led"){
-            for(int i=0; i<led.size(); i++)
-                if(led[i]->getName() == gadget)
-                    led[i]->accion();
-        }
-        else if(gadget == "Yellow_Led"){
+        else {
             for(int i=0; i<led.size(); i++)
                 if(led[i]->getName() == gadget)
                     led[i]->accion();
