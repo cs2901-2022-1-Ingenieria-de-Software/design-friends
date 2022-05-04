@@ -2,23 +2,23 @@
 #include <vector>
 using namespace std;
 
-class Led{
-protected:
-    bool activated;
-    string name;
-public:
-    virtual void accion() = 0;
-    Led(){
-        activated = false;
-    }
-    string getName(){
-        return name;
-    }
+class Gadget{
+    protected:
+        bool activated;
+        string name;
+    public:
+        Gadget(){
+            activated = false;
+        }
+        virtual void accion() = 0;
+        string getName(){
+            return name;
+        }
 };
 
-class YellowLed:public Led{
+class YellowLed:public Gadget{
 public:
-    YellowLed():Led(){
+    YellowLed():Gadget(){
         name = "Yellow_Led";
     }
     void accion() override{
@@ -29,9 +29,9 @@ public:
     }
 };
 
-class RedLed:public Led{
+class RedLed:public Gadget{
 public:
-    RedLed(){
+    RedLed():Gadget(){
         name = "Red_Led";
     }
     void accion() override{
@@ -42,9 +42,9 @@ public:
     }
 };
 
-class WhiteLed:public Led{
+class WhiteLed:public Gadget{
 public:
-    WhiteLed(){
+    WhiteLed(): Gadget(){
         name = "White_Led";
     }
     void accion() override{
@@ -55,65 +55,51 @@ public:
     }
 };
 
-class Fan{
-private:
-    bool activated;
-public:
-    Fan(){
-        activated = false;
-    }
-    void function(){
-        if(!activated)
-            cout<<"Fan on"<<endl;
-        else
-            cout<<"Fan off"<<endl;
-    }
+class Fan:public Gadget{
+    public:
+        Fan():Gadget(){
+            name = "Fan";
+        }
+        void accion() override{
+            if(!activated)
+                cout<<"Fan on"<<endl;
+            else
+                cout<<"Fan off"<<endl;
+        }
 };
 
 class MainControl{
 private:
-    vector<Led*> led;
-    Fan fan;
+    vector<Gadget*> gadget;
 public:
     MainControl(){};
-    MainControl(vector<Led*> _led, Fan _fan){
-        led = _led;
-        fan = _fan;
+    MainControl(vector<Gadget*> _gadget){
+        gadget = _gadget;
     }
-    void setLEDs(vector<Led*> _led){
-        led = _led;
+    void setGadget(vector<Gadget*> _gadget){
+        gadget = _gadget;
     }
-    void setFan(Fan _fan){
-        fan = _fan;
+    vector<Gadget*> getGadgets(){
+        return gadget;
     }
-    vector<Led*> getLEDs(){
-        return led;
-    }
-    Fan getFan(){
-        return fan;
-    }
-    void activateGadgets(string gadget){
-        if(gadget == "Fan")
-            fan.function();
-        else {
-            for(int i=0; i<led.size(); i++)
-                if(led[i]->getName() == gadget)
-                    led[i]->accion();
-        }
+    void activateGadgets(string _gadget){
+        for(int i=0; i<gadget.size(); i++)
+            if(gadget[i]->getName() == _gadget)
+                gadget[i]->accion();
     }
 };
 
 int main() {
     MainControl *control = new MainControl();
-    vector<Led*> led;
+    vector<Gadget*> gadgets;
     auto *n = new YellowLed();
     auto *n1 = new RedLed();
     auto *n2 = new WhiteLed();
-    Fan fan;
-    led.push_back(n);
-    led.push_back(n1);
-    led.push_back(n2);
-    control->setLEDs(led);
-    control->setFan(fan);
+    auto *fan = new Fan();
+    gadgets.push_back(n);
+    gadgets.push_back(n1);
+    gadgets.push_back(n2);
+    gadgets.push_back(fan);
+    control->setGadget(gadgets);
     control->activateGadgets("Yellow_Led");
 }
