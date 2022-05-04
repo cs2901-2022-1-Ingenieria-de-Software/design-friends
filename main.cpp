@@ -26,7 +26,8 @@ public:
         name = "Yellow_Led";
     }
     void accion() override{
-        if(!activated)
+        Activated();
+        if(activated)
             cout<<"Yellow on"<<endl;
         else
             cout<<"Yellow off"<<endl;
