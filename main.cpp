@@ -15,7 +15,8 @@ class Gadget{
             return name;
         }
         void Activated(){
-            activated = true;
+            if(!activated) activated = true;
+            else if(activated) activated = false;
         }
 };
 
