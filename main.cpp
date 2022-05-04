@@ -14,6 +14,9 @@ class Gadget{
         string getName(){
             return name;
         }
+        void Activated(){
+            activated = true;
+        }
 };
 
 class YellowLed:public Gadget{
@@ -35,7 +38,8 @@ public:
         name = "Red_Led";
     }
     void accion() override{
-        if(!activated)
+        Activated();
+        if(activated)
             cout<<"Red on"<<endl;
         else
             cout<<"Red off"<<endl;
@@ -48,7 +52,8 @@ public:
         name = "White_Led";
     }
     void accion() override{
-        if(!activated)
+        Activated();
+        if(activated)
             cout<<"White on"<<endl;
         else
             cout<<"White off"<<endl;
@@ -61,7 +66,8 @@ class Fan:public Gadget{
             name = "Fan";
         }
         void accion() override{
-            if(!activated)
+            Activated();
+            if(activated)
                 cout<<"Fan on"<<endl;
             else
                 cout<<"Fan off"<<endl;
